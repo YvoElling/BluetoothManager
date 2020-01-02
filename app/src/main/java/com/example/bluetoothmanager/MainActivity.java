@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements BTDeviceAdapter.I
     public ArrayList<Device> dataset;
 
     private final static int REQUEST_ENABLE_BT = 1;
+    public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     private BluetoothAdapter bluetoothAdapter;
 
     @Override
@@ -94,7 +95,8 @@ public class MainActivity extends AppCompatActivity implements BTDeviceAdapter.I
     @Override
     public void onItemClick(View view, int position) {
         Intent btOptionsPage = new Intent(this, DeviceOptionsActivity.class);
-        btOptionsPage.putExtra("com.example.bluetoothmanager", position);
+        btOptionsPage.putExtra(EXTRA_MESSAGE,
+                mAdapter.getItem(position).getName());
         this.startActivity(btOptionsPage);
     }
 
