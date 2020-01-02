@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BluetoothManager</string>
+    <string name="activate_bluetooth">Press this button to turn Bluetooth on</string>
+
+</resources>
