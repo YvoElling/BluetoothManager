@@ -18,7 +18,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity implements BTDeviceAdapter.ItemClickListener {
     private RecyclerView recyclerView;
     private BTDeviceAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity  {
         dataset = new ArrayList<>();
         mAdapter = new BTDeviceAdapter(this, dataset);
         recyclerView.setAdapter(mAdapter);
+        mAdapter.setClickListener(this);
 
         DividerItemDecoration dividerItemDecoration =
                 new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
@@ -88,6 +89,13 @@ public class MainActivity extends AppCompatActivity  {
             bluetoothButton.setTag(R.drawable.bluetooth_blue);
             startBluetoothSearch();
         }
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        Intent btOptionsPage = new Intent(this, DeviceOptionsActivity.class);
+        btOptionsPage.putExtra("com.example.bluetoothmanager", position);
+        this.startActivity(btOptionsPage);
     }
 
     /** Initiate the bluetooth search once bluetooth is on */

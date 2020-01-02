@@ -16,11 +16,13 @@ public class BTDeviceAdapter extends RecyclerView.Adapter<BTDeviceAdapter.ViewHo
 
     private ArrayList<Device> mData;
     private LayoutInflater mInflater;
+    private ItemClickListener mClickListener;
 
     // data is passed into the constructor
     BTDeviceAdapter(Context context, ArrayList<Device> dataset) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = dataset;
+
     }
 
     // inflates the row layout from xml when needed
@@ -63,9 +65,7 @@ public class BTDeviceAdapter extends RecyclerView.Adapter<BTDeviceAdapter.ViewHo
 
         @Override
         public void onClick(View view) {
-            Context context = view.getContext();
-            Intent intent = new Intent(context, DeviceOptionsActivity.class);
-            context.startActivity(intent);
+            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
         }
 
     }
@@ -73,6 +73,16 @@ public class BTDeviceAdapter extends RecyclerView.Adapter<BTDeviceAdapter.ViewHo
     // convenience method for getting data at click position
     Device getItem(int id) {
         return mData.get(id);
+    }
+
+    // allows clicks events to be caught
+    void setClickListener(ItemClickListener itemClickListener) {
+        this.mClickListener = itemClickListener;
+    }
+
+    // parent activity will implement this method to respond to click events
+    public interface ItemClickListener {
+        void onItemClick(View view, int position);
     }
 
 }
